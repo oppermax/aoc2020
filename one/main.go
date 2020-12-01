@@ -2,26 +2,22 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
 )
 
-func twoMake2020(c int, p int, input []int) (int, int) {
-	for i, number := range input {
-		p := c + number
-		if i == p {
-			continue
+func twoMake2020(input []int) int {
+	for _, numberOne := range input {
+		for _, numberTwo := range input {
+			if numberOne+numberTwo == 2020 {
+				return numberOne * numberTwo
+			}
 		}
-		if p == 2020 {
-			return c, number
-		}
-		//log.Infof("Possibly %v", p)
-		fmt.Println(p)
+
 	}
-	return 0, 0
+	return 0
 }
 
 func threeMake2020(input []int) int {
@@ -58,20 +54,15 @@ func main() {
 		log.Infof("Could not read file: %v", err)
 	}
 	defer input.Close()
-
 	numbers := readFile(input)
-	// for i, num := range numbers {
-	// 	a, b := twoMake2020(num, i, numbers)
-	// 	if a != 0 {
-	// 		log.Infof("Solution: %v ", a*b)
-	// 		return
-	// }
-	// }
+
+	a := twoMake2020(numbers)
+	if a != 0 {
+		log.Infof("Solution of two that make 2020: %v ", a)
+	}
 	s := threeMake2020(numbers)
 	if s != 0 {
-		log.Infof("Solution: %v", s)
-	} else {
-		log.Info("No solution found")
+		log.Infof("Solution of three that make 2020: %v", s)
 	}
 
 }
