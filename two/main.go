@@ -35,20 +35,23 @@ func checkPw2(line string) bool {
 	nums := findNum(line)
 	char := findChar(line)
 	pw := findPw(line)
-	lo := nums[0] - 1
-	hi := nums[1] - 1
+	lo := nums[0] -1
+	hi := nums[1] -1
 
 	log.Infof("\nThis should have a %v at %v or %v in %v len: %v", char, lo, hi, pw, len(pw))
 
-	if char == string(pw[lo]) || char == string(pw[hi]) {
-		log.Infof("This is true. %v is at %v and %v is at %v", string(pw[lo]), lo, string(pw[hi]), hi)
-		return true
-	} else if char == string(pw[lo]) && char == string(pw[hi]) {
+	if char == string(pw[lo]) && char == string(pw[hi]) {
 		log.Infof("This is false. %v is at %v and %v is at %v", string(pw[lo]), lo, string(pw[hi]), hi)
 		return false
-	} else {
-		log.Infof("Something is wrong: %v is at %v and %v is at %v", string(pw[lo]), lo, string(pw[hi]), hi)
+	} else if char == string(pw[lo]) || char == string(pw[hi]) {
+		log.Infof("This is true. %v is at %v and %v is at %v", string(pw[lo]), lo, string(pw[hi]), hi)
 		return true
+	} else if char != string(pw[lo]) && char != string(pw[hi]){
+		log.Infof("Something is wrong: %v is at %v and %v is at %v", string(pw[lo]), lo, string(pw[hi]), hi)
+		return false
+	} else {
+		log.Panic()
+		return false
 	}
 }
 
@@ -116,7 +119,7 @@ func main() {
 	}
 	for _, line := range passwords {
 		t := checkPw2(line)
-		if t == false {
+		if t == true {
 			wPw2++
 		}
 	}
