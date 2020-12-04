@@ -8,25 +8,24 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func findTree(layers []string) int{
+func findTree(layers []string) int {
 	var treeCount int
 	steps := 0
-	for i, layer := range layers{
+	for i, layer := range layers {
 
-		log.Infof("%v: %v", i, layer)
+		// log.Infof("%v: %v", i, layer)
 		layer = strings.Repeat(layer, i+10)
-			if string(layer[steps]) == "#" {
-				treeCount++
-				log.Infof("Found a tree %v", string(layer[:steps+1]))
-				steps = i * 3 // three steps to the right
-			} else if string(layer[steps]) == "." {
-				steps = i * 3 // three steps to the right
+		if string(layer[steps]) == "#" {
+			treeCount++
+			// log.Infof("Found a tree")
+			steps += 7 // three steps to the right
+		} else if string(layer[steps]) == "." {
+			steps += 7 // three steps to the right
 
-			} else {
-				log.Panicf("Found a %s", layer[steps])
-			}
-		log.Infof("Steps: %v", steps)
-
+		} else {
+			log.Panicf("Found a")
+		}
+		// log.Infof("Steps: %v", steps)
 
 	}
 	return treeCount
@@ -43,7 +42,7 @@ func readFile(file *os.File) []string {
 	return layers
 }
 
-func main(){
+func main() {
 	input, err := os.Open("input")
 	if err != nil {
 		log.Infof("Could not read file: %v", err)
