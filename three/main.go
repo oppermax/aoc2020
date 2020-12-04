@@ -11,6 +11,15 @@ import (
 func findTree(layers []string) int {
 	var treeCount int
 	steps := 0
+
+	sLayers := []string{}
+	for i, layer := range layers {
+		if i%2 == 0 {
+			sLayers = append(sLayers, layer)
+		}
+	}
+	layers = sLayers
+
 	for i, layer := range layers {
 
 		// log.Infof("%v: %v", i, layer)
@@ -18,9 +27,9 @@ func findTree(layers []string) int {
 		if string(layer[steps]) == "#" {
 			treeCount++
 			// log.Infof("Found a tree")
-			steps += 7 // three steps to the right
+			steps += 1 // three steps to the right
 		} else if string(layer[steps]) == "." {
-			steps += 7 // three steps to the right
+			steps += 1 // three steps to the right
 
 		} else {
 			log.Panicf("Found a")
@@ -51,4 +60,5 @@ func main() {
 	layers := readFile(input)
 	out := findTree(layers)
 	log.Infof("Found %v trees", out)
+	log.Infof("Trees for two: %v", 94*99*214*91*46)
 }
