@@ -183,6 +183,7 @@ func main(){
 	}
 	lines := readFile(inputFile)
 	records := createRecords(lines)
+	log.Info(records)
 	validR := validateRecords(records)
 	log.Infof("%v valid passports found, Total: %v", validR, len(records))
 
