@@ -22,11 +22,9 @@ func findTree(layers []string) int {
 
 	for i, layer := range layers {
 
-		// log.Infof("%v: %v", i, layer)
 		layer = strings.Repeat(layer, i+10)
 		if string(layer[steps]) == "#" {
 			treeCount++
-			// log.Infof("Found a tree")
 			steps += 1 // three steps to the right
 		} else if string(layer[steps]) == "." {
 			steps += 1 // three steps to the right
@@ -34,7 +32,6 @@ func findTree(layers []string) int {
 		} else {
 			log.Panicf("Found a")
 		}
-		// log.Infof("Steps: %v", steps)
 
 	}
 	return treeCount
