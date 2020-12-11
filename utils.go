@@ -2,8 +2,8 @@ package utils
 
 import (
 	"bufio"
-	"os"
 	log "github.com/sirupsen/logrus"
+	"os"
 )
 
 func readFile(file *os.File) []string {
