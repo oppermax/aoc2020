@@ -1,4 +1,4 @@
-package seven
+package main
 
 import (
 	"regexp"
@@ -6,7 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func FindRelevantRules(allRules []string, relRules []string) []string {
+func findRelevantRules(allRules []string, relRules []string) []string {
 	var t []string
 	reNewRule := regexp.MustCompile(`\w+ \w+`)
 	if len(relRules) == 0 {
@@ -27,7 +27,7 @@ func FindRelevantRules(allRules []string, relRules []string) []string {
 
 }
 
-func FindNextLevelRules(allRules []string, relRules map[string]int) map[string]int {
+func findNextLevelRules(allRules []string, relRules map[string]int) map[string]int {
 	if len(relRules) == 0 {
 		relRules["shiny gold"] = 0
 	}

@@ -1,4 +1,4 @@
-package utils
+package aoc2020
 
 import (
 	"bufio"
@@ -12,12 +12,26 @@ func readFile(file *os.File) []string {
 	for scanner.Scan() {
 		num := scanner.Text()
 
-		lines = append(layers, num)
+		lines = append(lines, num)
 	}
 	return lines
 }
 
-func getLines(filepath string) []string {
+func RemoveDuplicates(elements []string) []string {
+	encountered := map[string]bool{}
+	out := []string{}
+
+	for v := range elements {
+		if encountered[elements[v]] == true {
+		} else {
+			encountered[elements[v]] = true
+			out = append(out, elements[v])
+		}
+	}
+	return out
+}
+
+func GetLines(filepath string) []string {
 	inputFile, err := os.Open("input")
 	if err != nil {
 		log.Infof("Could not read file: %v", err)
