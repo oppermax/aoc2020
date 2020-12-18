@@ -14,6 +14,8 @@ type rule struct {
 }
 
 
+
+
 func fillTargetsMap(targetRaw []byte) (string, int){
 	targetRe := regexp.MustCompile(`([^\d\s]\w+ \w+)`)
 	numRe := regexp.MustCompile(`(\d+)`)
@@ -71,23 +73,26 @@ func countSubBags(ruleMap map[string]rule, startRule string) int{
 	return out + ruleMap[startRule].total
 }
 
-func countGoldenBags(ruleMap map[string]rule, lookingFor string) int {
+func countGoldenBags(ruleMap map[string]rule, lookingFor string, checked map[string]bool) (int, map[string]bool) {
 	out := 0
 	if ruleMap[lookingFor].targets == nil {
-		log.Infof("%v has no sub bags", lookingFor)
-		return 0
+		return 0, checked
 	}
 
 	for r := range ruleMap {
-		if t, ok := ruleMap[r].targets[lookingFor]; ok {
-			out += 1
-			log.Infof("%v contains %v of %v", r, t, lookingFor)
-			out += countGoldenBags(ruleMap, r)
+		if _, ok := ruleMap[r].targets[lookingFor]; ok {
+			add := 0
+			if !checked[r] { // need this to avoid duplication
+				checked[r] = true
+				add, checked = countGoldenBags(ruleMap, r, checked)
+				out += 1 + add
 			} else {
-		}
+			}
+
+			}
 	}
 
-	return out
+	return out, checked
 }
 
 
@@ -96,7 +101,8 @@ func main(){
 	rules := utils.GetLines("007/input")
 	ruleMap := makeRuleMap(rules)
 	const startRule = "shiny gold"
-	totalOne := countGoldenBags(ruleMap, startRule)
+	checked := make(map[string]bool)
+	totalOne, _ := countGoldenBags(ruleMap, startRule, checked)
 	totalTwo := countSubBags(ruleMap, startRule)
-	log.Info(totalOne, totalTwo)
+	log.Infof("The results:\n%v bags can eventually hold at least one shiny golden bag\n%v bags are needed to carry one golden bag", totalOne, totalTwo)
 }
