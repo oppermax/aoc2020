@@ -4,6 +4,7 @@ import (
 	"bufio"
 	log "github.com/sirupsen/logrus"
 	"os"
+	"strconv"
 )
 
 func readFile(file *os.File) []string {
@@ -37,4 +38,23 @@ func GetLines(filepath string) []string {
 		log.Infof("Could not read file: %v", err)
 	}
 	return readFile(inputFile)
+}
+
+func GetLinesInt(filepath string) []int {
+	inputFile, err := os.Open("input")
+	if err != nil {
+		log.Infof("Could not read file: %v", err)
+	}
+	scanner := bufio.NewScanner(inputFile)
+	var lines []int
+	for scanner.Scan() {
+		str := scanner.Text()
+		num, err := strconv.Atoi(str)
+		if err != nil {
+			log.WithError(err)
+		}
+
+		lines = append(lines, num)
+	}
+	return lines
 }
